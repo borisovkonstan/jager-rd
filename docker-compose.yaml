@@ -9,7 +9,8 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: toor
-      MYSQL_USER: root
+      MYSQL_PASSWORD: toor
+      MYSQL_USER: sqluser
       MYSQL_DATABASE: blog
   web-one:
     build:
@@ -29,10 +30,10 @@ services:
       - loadbalancer
       - logservice
     command: -loadbalancer http://loadbalancer:2001 -logservice http://logservice:6000
-  cacheservice:
-    image: cacheservice:latest
-    ports:
-      - "5000:3000"
+  # cacheservice:
+  #   image: cacheservice:latest
+  #   ports:
+  #     - "5000:3000"
   dataservice:
     build:
       context: .
@@ -72,10 +73,10 @@ services:
       dockerfile: Dockerfile-logservice
     ports:
       - "6000:6000"
-  pinger:
-    image: pinger:latest
-    ports:
-      - "7000:7000"
+  # pinger:
+  #   image: pinger:latest
+  #   ports:
+  #     - "7000:7000"
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
