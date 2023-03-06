@@ -1,6 +1,6 @@
-SERVICES=dataservice loadbalancer logservice web
+SERVICES=dataservice loadbalancer logservice web db
 VERSION=$(shell cat VERSION)
-ECR_BASE=589295909756.dkr.ecr.us-east-2.amazonaws.com
+ECR_BASE=482720962971.dkr.ecr.us-east-1.amazonaws.com
 CHARTS_REPO_NAME=helm-rnd-charts
 
 CHART=jaeger-rd

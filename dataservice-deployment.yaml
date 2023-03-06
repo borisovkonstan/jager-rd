@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: dataservice
+  name: dataservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: dataservice
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/jager-rd-default: "true"
+        io.kompose.service: dataservice
+    spec:
+      containers:
+        - env:
+            - name: JAEGER_AGENT_HOST
+              value: jaeger
+            - name: JAEGER_AGENT_PORT
+              value: "6831"
+            - name: JAEGER_REPORTER_LOG_SPANS
+              value: "true"
+            - name: JAEGER_SAMPLER_MANAGER_HOST_PORT
+              value: jaeger:5778
+            - name: JAEGER_SAMPLER_PARAM
+              value: "1"
+            - name: JAEGER_SAMPLER_TYPE
+              value: const
+            - name: LISTEN_PORT
+              value: "4000"
+          image: dataservice
+          name: dataservice
+          ports:
+            - containerPort: 4000
+          resources: {}
+      restartPolicy: Always
+status: {}
